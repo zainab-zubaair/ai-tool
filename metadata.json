@@ -1,0 +1,6 @@
+{
+  "name": "Taleem Punjab - PTB Lesson & BISE Exam Architect",
+  "description": "Comprehensive Punjab Textbook Board (PTB) lesson planning and BISE Punjab exam paper generator covering Prep to Class 10 Matric with grade adaptation, SLO alignment, and subject-specific pedagogy.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

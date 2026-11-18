@@ -1,0 +1,410 @@
+@import "tailwindcss";
+
+@layer utilities {
+  .font-urdu {
+    font-family: 'Noto Nastaliq Urdu', 'Amiri', serif;
+    line-height: 2.2;
+  }
+  .font-amiri {
+    font-family: 'Amiri', serif;
+  }
+}
+
+/* ==========================================================================
+   Complete Print Stylesheet for The Punjab School Lesson Plans & Documents
+   ========================================================================== */
+@media print {
+  @page {
+    size: A4 portrait;
+    margin: 6mm 8mm;
+  }
+
+  /* 1. Global Reset & Print Color Adjust on every element */
+  *,
+  *::before,
+  *::after {
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    box-sizing: border-box !important;
+  }
+
+  html, body {
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    width: 100% !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* 2. Absolute Hiding of App Chrome, Toolbars, Sidebars & Left Generator Panels */
+  header,
+  footer,
+  nav,
+  aside,
+  .no-print,
+  button:not(.allow-print),
+  .fixed,
+  [role="dialog"] {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    width: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Hide left generator panels / sidebars so only the formatted plan prints */
+  .lg\:col-span-3,
+  .lg\:col-span-4,
+  .lg\:col-span-5,
+  .md\:col-span-3,
+  .md\:col-span-4,
+  .md\:col-span-5,
+  .col-span-3,
+  .col-span-4,
+  .col-span-5,
+  [class*="col-span-3"],
+  [class*="col-span-4"],
+  [class*="col-span-5"] {
+    display: none !important;
+    visibility: hidden !important;
+    height: 0 !important;
+    width: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  /* Reset all parent containers so they do not constrain printable content */
+  #root,
+  .min-h-screen,
+  main,
+  .max-w-7xl,
+  .grid,
+  .grid-cols-1,
+  .lg\:grid-cols-12,
+  div:has(#printable-plan),
+  div:has(.printable-document) {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    float: none !important;
+  }
+
+  /* Expand right document container to 100% full printable page width */
+  .lg\:col-span-7,
+  .lg\:col-span-8,
+  .lg\:col-span-9,
+  .lg\:col-span-12,
+  .md\:col-span-7,
+  .md\:col-span-8,
+  .md\:col-span-12,
+  .col-span-7,
+  .col-span-8,
+  .col-span-12,
+  .col-span-full,
+  [class*="col-span-7"],
+  [class*="col-span-8"],
+  [class*="col-span-9"],
+  [class*="col-span-12"],
+  [class*="col-span-full"] {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 100% !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    border: none !important;
+    box-shadow: none !important;
+    float: none !important;
+  }
+
+  .overflow-hidden,
+  .overflow-y-auto,
+  .overflow-x-auto {
+    overflow: visible !important;
+    height: auto !important;
+    max-height: none !important;
+  }
+
+  /* 3. Printable Document Target & Content Containers */
+  .printable-document,
+  .printable-sheet,
+  #printable-plan,
+  #printable-exam,
+  #printable-worksheet,
+  [id^="printable-"],
+  .content-container,
+  .printable-content {
+    display: block !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 100% !important;
+    margin: 0 auto !important;
+    padding: 0 !important;
+    background: #ffffff !important;
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    box-shadow: none !important;
+    border: none !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+    break-inside: auto !important;
+    page-break-inside: auto !important;
+    overflow: visible !important;
+    height: auto !important;
+    max-height: none !important;
+  }
+
+  /* Content containers: break-inside: auto to allow automatic page breaking without clipping */
+  .content-container,
+  .printable-sheet,
+  .printable-document,
+  .print-friendly-only,
+  .outer-border-box,
+  .inner-border-box,
+  .section-block {
+    break-inside: auto !important;
+    page-break-inside: auto !important;
+    overflow: visible !important;
+    height: auto !important;
+    max-height: none !important;
+  }
+
+  /* Lesson Body Section: break-inside: auto and page-break-before: always if it overflows */
+  .lesson-body,
+  .lesson-body-section,
+  [data-section="lesson-body"] {
+    break-inside: auto !important;
+    page-break-inside: auto !important;
+    overflow: visible !important;
+  }
+
+  /* Page-break-before: always to the 'Lesson Body' section if it overflows */
+  .lesson-body.overflow,
+  .lesson-body.overflows,
+  .lesson-body.page-break-overflow,
+  .lesson-body-overflow,
+  .lesson-body[data-overflow="true"],
+  .lesson-body.break-before,
+  .lesson-body.break-before-always {
+    page-break-before: always !important;
+    break-before: page !important;
+  }
+
+  /* ==========================================================================
+     Print-Friendly-Only Document Layout: Exact On-Screen Fidelity
+     Ensures print renders identical to on-screen view without breaking flex or grid
+     ========================================================================== */
+  .print-friendly-only {
+    width: 100% !important;
+    max-width: 100% !important;
+    margin: 0 auto !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    break-inside: auto !important;
+    page-break-inside: auto !important;
+  }
+
+  /* 4. Text Display Fidelity: Keep exact fonts, alignments, and ruled lines intact */
+  .print-friendly-only .school-title-serif,
+  .school-title-serif {
+    font-family: Georgia, "Times New Roman", Times, serif !important;
+    font-weight: 900 !important;
+    color: #000000 !important;
+  }
+
+  /* Ruled lines in print: text MUST sit cleanly above line without any collision or strikethrough */
+  .print-friendly-only .ruled-line,
+  .ruled-line,
+  [data-ruled-line] {
+    display: block !important;
+    height: 28px !important;
+    height: var(--ruled-line-height, 28px) !important;
+    min-height: 28px !important;
+    min-height: var(--ruled-line-height, 28px) !important;
+    max-height: 40px !important;
+    line-height: 25px !important;
+    line-height: var(--ruled-line-text-height, 25px) !important;
+    border-bottom: 1px solid #000000 !important;
+    padding: 0 4px 3px 4px !important;
+    margin: 0 !important;
+    font-size: 8.8pt !important;
+    color: #000000 !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    box-sizing: border-box !important;
+    float: none !important;
+  }
+
+  .print-friendly-only .ruled-line span,
+  .ruled-line span {
+    display: inline !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    line-height: inherit !important;
+  }
+
+  /* Fillable metadata text lines */
+  .print-friendly-only .fillable-field-text,
+  .fillable-field-text {
+    border-bottom: 1px solid #000000 !important;
+    padding: 0 4px 3px 4px !important;
+    font-size: 8.8pt !important;
+    line-height: 22px !important;
+    line-height: var(--field-line-height, 22px) !important;
+    height: 25px !important;
+    height: var(--field-height, 25px) !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    color: #000000 !important;
+    display: block !important;
+    box-sizing: border-box !important;
+    margin: 0 !important;
+  }
+
+  /* 5. Keep Header Fields in Grid and Flex Rows — never stack vertically */
+  .print-friendly-only .header-grid-3,
+  .header-grid-3 {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr 1fr !important;
+    gap: 8px !important;
+  }
+
+  .print-friendly-only .header-grid-2,
+  .header-grid-2 {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 12px !important;
+  }
+
+  .print-friendly-only .metadata-field-pair,
+  .metadata-field-pair {
+    display: flex !important;
+    align-items: flex-end !important;
+    height: 28px !important;
+    height: var(--metadata-pair-height, 28px) !important;
+  }
+
+  .print-friendly-only .metadata-field-pair .field-label,
+  .metadata-field-pair .field-label {
+    display: inline-block !important;
+    font-weight: 700 !important;
+    margin-right: 4px !important;
+    white-space: nowrap !important;
+  }
+
+  .print-friendly-only .metadata-field-pair .fillable-field-text,
+  .metadata-field-pair .fillable-field-text {
+    display: block !important;
+    flex: 1 !important;
+  }
+
+  .print-friendly-only .teaching-aids-grid,
+  .print-friendly-only .methodology-grid,
+  .teaching-aids-grid,
+  .methodology-grid {
+    display: grid !important;
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    column-gap: 8px !important;
+    row-gap: 4px !important;
+  }
+
+  .print-friendly-only .square-checkbox,
+  .square-checkbox {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 4px !important;
+  }
+
+  .print-friendly-only .square-checkbox span,
+  .square-checkbox span {
+    display: inline !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+
+  .print-friendly-only .square-checkbox svg,
+  .square-checkbox svg {
+    display: inline-block !important;
+    vertical-align: middle !important;
+  }
+
+  .print-friendly-only .signature-row,
+  .signature-row {
+    display: flex !important;
+    flex-direction: row !important;
+    justify-content: space-between !important;
+    align-items: flex-end !important;
+  }
+
+  .print-friendly-only .header-flex-row,
+  .header-flex-row {
+    display: flex !important;
+    flex-direction: row !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+  }
+
+  /* 6. Double Border around Page (exact match to photo) */
+  .outer-border-box {
+    border: 2px solid #000000 !important;
+    padding: 2.5px !important;
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    box-sizing: border-box !important;
+  }
+
+  .inner-border-box {
+    border: 1px solid #000000 !important;
+    padding: 10px 12px !important;
+    background-color: #ffffff !important;
+    color: #000000 !important;
+    box-sizing: border-box !important;
+  }
+
+  /* 7. Ensure Logo and SVGs print properly */
+  .printable-sheet img,
+  .printable-document img {
+    display: block !important;
+    max-width: 100% !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  svg {
+    display: inline-block !important;
+    -webkit-print-color-adjust: exact !important;
+    print-color-adjust: exact !important;
+  }
+
+  /* 8. Page Break Control & Avoiding Splitting across Small Widgets */
+  .print-avoid-break,
+  .teaching-methodology-box {
+    page-break-inside: avoid !important;
+    break-inside: avoid !important;
+  }
+
+  .print-page-break {
+    page-break-after: always !important;
+    break-after: page !important;
+  }
+
+  /* Table borders in print */
+  table {
+    width: 100% !important;
+    border-collapse: collapse !important;
+  }
+
+  th, td {
+    border: 1px solid #000000 !important;
+    padding: 4px 6px !important;
+  }
+}
